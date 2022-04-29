@@ -1,4 +1,4 @@
 {
-    "yahooApiKey" : "",
-    "psqlConnectionString": "" 
+    "yahooApiKey" : "jPZ0hEAMG5886CjvTUEpN2g7Lh77jW66a8AEbMaM",
+    "psqlConnectionString": "postgres://ibcyytja:yzhQ8JjmPfxhAW24Y5nDS0maGeHE6-_P@topsy.db.elephantsql.com/ibcyytja" 
 }

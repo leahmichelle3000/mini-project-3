@@ -1,7 +1,6 @@
 // I got this from yahoofinanceapi.com
 // Axios seems to be more commonly used than in the real world
 'use strict'
-import favouriteMethods from '../db_methods/favourites.js';
 
 // MINI PROJECT 3 - store the API data in the database mongo DB or postgres or elephant SQL
 // GO TO: https://www.npmjs.com/package/postgres
@@ -28,6 +27,7 @@ router.get('/mamaastocks', (req, res) => {
 
    axios({
   method: 'GET', //you can set what request you want to be
+  // url: 'https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=WBC.AX%2CAMZN%2CGOOG%2CFB%2CMSFT%2CNAB.AX',
   url: 'https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=AAPL%2CAMZN%2CGOOG%2CFB%2CMSFT%2CNAB.AX',
     params: {modules: 'defaultKeyStatistics,assetProfile'},
   headers: {
@@ -44,7 +44,7 @@ router.get('/mamaastocks', (req, res) => {
 
 // START
 
-// another try - GOOGLE THIS: query to insert nested array postgres node js
+// Gets the results from Yahoo finance api and inserts in to our psql database
 
 const insertDynamicStockQuery = `INSERT INTO stocks (symbol, price) VALUES 
   ('${results[0].symbol}', '${results[0].regularMarketPrice}'), 
@@ -92,26 +92,12 @@ client.connect(function(err) {
   //   }) 
   // });
 });
-/// ENDS
-      
-      // insertStock (result.data[0].symbol, result.data[0].price)
-
-  // to do - this is where I need to store the data to the DB
+  // send stock data back to user
   res.send(result.data);
   // console.log('yahoo'+res);
 })
 });
 
-router.post('/favourite', async (req, res) => {
-  if (!req.body.stock_id || !req.body.user_id) {
-    res.status(400);
-    res.send('Must provide user_id and stock_id');
-    return
-  }
-
-  await favouriteMethods.insertFavourite(req.body.stock_id, req.body.user_id)
-  res.status(200)
-})
 
 
 export default router
